@@ -124,6 +124,11 @@ class BootstrapPaginatorHelper extends PaginatorHelper {
         $size = $options['size'] ; unset($options['size']) ;
         
         $class = 'pagination' ;
+
+        if (isset($options['ulClass'])) {
+            $class .= ' '.$options['ulClass'] ;
+            unset($options['ulClass']) ;
+        }
         
         switch ($size) {
         case 'small':
@@ -136,6 +141,14 @@ class BootstrapPaginatorHelper extends PaginatorHelper {
           
         $options['before'] = '<ul class="'.$class.'">' ;
         $options['after'] = '</ul>' ;
+
+        if (isset($options['prev'])) {
+            $options['before'] .= $this->prev($options['prev']) ;
+        }
+
+        if (isset($options['next'])) {
+            $options['after'] = $this->next($options['next']).$options['after'] ;
+        }
                 
         return parent::numbers ($options) ;
     }

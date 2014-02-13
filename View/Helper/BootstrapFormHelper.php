@@ -22,7 +22,7 @@
 
 App::import('Helper', 'Form') ;
 
-class BootstrapFormHelper extends FormHelper {
+class Bootstrap3FormHelper extends FormHelper {
 
     public $helpers = array('Html') ;
     
@@ -61,6 +61,19 @@ class BootstrapFormHelper extends FormHelper {
         unset($options['bootstrap-size']) ;
         unset($options['bootstrap-type']) ;
         return $options ;
+    }
+
+    /**
+     *
+     * Try to match the specified HTML code with a button or a input with submit type.
+     *
+     * @param $html The HTML code to check
+     *
+     * @return true if the HTML code contains a button
+     *
+    **/
+    private function matchButton ($html) {
+        return strpos($html, '<button') !== FALSE || strpos($html, 'type="submit"') !== FALSE ;
     }
 	
     /**
@@ -207,9 +220,9 @@ class BootstrapFormHelper extends FormHelper {
             $options['label'] = false ;
         }
         if ($prepend) {
-            $beforeClass .= ' input-group input-prepend' ;
+            $beforeClass .= ' input-group' ;
             if (is_string($prepend)) {
-                $before .= '<span class="add-on">'.$prepend.'</span>' ;
+                $before .= '<span class="input-group-'.($this->matchButton($prepend) ? 'btn' : 'addon').'">'.$prepend.'</span>' ;
             }
             if (is_array($prepend)) {
                 foreach ($prepend as $pre) {
@@ -218,9 +231,9 @@ class BootstrapFormHelper extends FormHelper {
             }
         }
         if ($append) {
-            $beforeClass .= ' input-group input-append' ;
+            $beforeClass .= ' input-group' ;
             if (is_string($append)) {
-                $between = '<span class="add-on">'.$append.'</span>'.$between ;
+                $between = '<span class="input-group-'.($this->matchButton($append) ? 'btn' : 'addon').'">'.$append.'</span>'.$between ;
             }
             if (is_array($append)) {
                 foreach ($append as $apd) {
@@ -238,7 +251,9 @@ class BootstrapFormHelper extends FormHelper {
         $options['after'] = $after ;
         $options['between'] = $between ;
         
-        $options = $this->addClass($options, 'form-control') ;
+        if ($options['type'] != 'checkbox' && $options['type'] != 'radio') {
+            $options = $this->addClass($options, 'form-control') ;
+        }
         
 		return parent::input($fieldName, $options) ;
 	}
