@@ -45,7 +45,7 @@ class Bootstrap3FormHelper extends FormHelper {
      * 
     **/
     private function addButtonClasses ($options) {
-        $options = $this->addClass($options, 'btn') ;
+        $options = $this->addClass($options, 'btn btn-default') ;
         foreach ($this->buttonTypes as $type) {
             if (isset($options['bootstrap-type']) && $options['bootstrap-type'] == $type) {
                 $options = $this->addClass($options, 'btn-'.$type) ;
@@ -120,7 +120,7 @@ class Bootstrap3FormHelper extends FormHelper {
         }
         $options['role'] = 'form' ;
         $options['inputDefaults'] = array(
-            'div' => $this->inline ? false : array(
+            'div' => array(
                 'class' => 'form-group'
             )
         ) ;
@@ -169,9 +169,14 @@ class Bootstrap3FormHelper extends FormHelper {
         $this->setEntity($fieldName);
         $optField = $this->_magicOptions(array()) ;
         if ($optField['type'] != 'checkbox' && $optField['type'] != 'radio') {
-            $options = $this->addClass($options, 'control-label') ;
+            if (!$this->inline) {
+                $options = $this->addClass($options, 'control-label') ;
+            }
             if ($this->horizontal) {
                 $options = $this->addClass($options, $this->getColClass('label')) ;
+            }
+            if ($this->inline) {
+                $options = $this->addClass($options, 'sr-only') ;
             }
         }
         return parent::label($fieldName, $text, $options) ;
@@ -215,9 +220,6 @@ class Bootstrap3FormHelper extends FormHelper {
         }
         else if ($this->horizontal) {
             $beforeClass .= $this->getColClass('input') ;
-        }
-        else if ($this->inline && !$this->search && !$label) {
-            $options['label'] = false ;
         }
         if ($prepend) {
             $beforeClass .= ' input-group' ;
