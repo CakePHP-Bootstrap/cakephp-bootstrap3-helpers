@@ -104,14 +104,14 @@ class Bootstrap3FormHelper extends FormHelper {
             $this->colSize = $options['cols'] ;
         }
         $this->horizontal = $this->_extractOption('horizontal', $options, false);
-        unset($options['horizontal']);
+		unset($options['horizontal']);
         $this->search = $this->_extractOption('search', $options, false) ;
         unset($options['search']) ;
         $this->inline = $this->_extractOption('inline', $options, false) ;
         unset($options['inline']) ;
-        if ($this->horizontal) {
-	    $options = $this->addClass($options, 'form-horizontal') ;
-        }
+		if ($this->horizontal) {
+			$options = $this->addClass($options, 'form-horizontal') ;
+		}
         else if ($this->inline) {
             $options = $this->addClass($options, 'form-inline') ;
         }
@@ -124,8 +124,8 @@ class Bootstrap3FormHelper extends FormHelper {
                 'class' => 'form-group'
             )
         ) ;
-        return parent::create($model, $options) ;
-    }
+		return parent::create($model, $options) ;
+	}
     
     /**
      *
@@ -257,8 +257,8 @@ class Bootstrap3FormHelper extends FormHelper {
             $options = $this->addClass($options, 'form-control') ;
         }
         
-        return parent::input($fieldName, $options) ;
-     }
+		return parent::input($fieldName, $options) ;
+	}
     
     /**
      * 
