@@ -57,8 +57,8 @@ class BootstrapHtmlHelper extends HtmlHelper {
      * @param $color The color of the icon (black or white)
      * 
     **/
-    public function icon ($icon, $color = 'black') {
-        return '<i class="icon-'.$icon.' icon-'.$color.'"></i>' ; 
+    public function icon ($icon) {
+        return '<i class="glyphicon glyphicon-'.$icon.'"></i>' ; 
     }
     
     /**
