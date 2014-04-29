@@ -22,7 +22,7 @@
 
 App::import('Helper', 'Form') ;
 
-class Bootstrap3FormHelper extends FormHelper {
+class BootstrapFormHelper extends FormHelper {
 
     public $helpers = array('Html') ;
     

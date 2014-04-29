@@ -22,7 +22,7 @@
 
 App::import('Helper', 'Html') ;
 
-class Bootstrap3HtmlHelper extends HtmlHelper {    
+class BootstrapHtmlHelper extends HtmlHelper {    
 
     private function _extractOption ($key, $options, $default = null) {
         if (isset($options[$key])) {
