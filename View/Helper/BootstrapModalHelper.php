@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Bootstrap Form Helper
+* Bootstrap Modal Helper
 *
 *
 * PHP 5
