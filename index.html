@@ -7,6 +7,8 @@
     <meta name="description" content="Cakephp-bootstrap3-helpers : CakePHP Helpers to generate HTML with @Twitter Boostrap style (bootstrap v3.0 repository)" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/cakeboothelpers.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/prettify.css">
 
     <title>Cakephp-bootstrap3-helpers</title>
   </head>
@@ -31,20 +33,109 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
-            <h3>How to use?</h3>
+			<h2 id="introduction">What's Bootstrap-CakePHP-Helpers?</h2>
+			<p>Quite simply: It is a collection of CakePHP helpers to generate bootstrap code. The helpers are made
+			to deal with all the 'annoying' bootstrap stuff for you! You never remember what classes you  have to add
+			to this specific HTML tag to create a bootstrap form? You won't have to, the <code>BootstrapFormHelper</code>
+			does it for you! You never know what is the template to create a bootstrap modal? The <code>BootstrapModalHelper</code>
+			knows! Check it out!</p>
+            <h3>How to set up?</h3>
             <p>To use the helpers, just put them into your <code>View/Helper</code> folder and add the following 
             lines in your controller: <br />
-              <pre><code>public $helpers = array(
+              <pre><code class="prettyprint lang-php">public $helpers = array(
     'Html' => 'BootstrapHtml',
     'Form' => 'BootstrapForm',
     'Modal' => 'BootstrapModal',
     'Paginator' => 'BootstrapPaginator'
-) ;
-              </code></pre>
+) ;</code></pre>
             </p>
             Because each helper inherit from a base helper (<i>BootstrapHtmlHelper</i> inherits from <i>HtmlHelper</i>),
             you can (and I recommend) to simply use the bootstrap helpers as the default helpers in your view.
-            <h3>Work in progress... </h3>
+			<h3>How to use?</h3>
+			<p>Simply use the helpers as you were used to use (a lot of use... ) the default CakePHP helpers!</p>
+			<p>To create a form, just do:</p>
+<pre><code class="prettyprint lang-php">echo $this->Form->create('Model') ;
+echo $this->Form->input('fieldname1') ;
+echo $this->Form->input('fieldname2') ;
+echo $this->Form->end('Submit');</code></pre>
+			<p>What the difference from original helpers? Well, the output will have bootstrap template and HTML attributes
+			(see bellow).</p>
+			<h3>And that's all?</h3>
+			<p>Most of the works is done by redefining the default method in the helpers (such as <code>FormHelper::input</code>),
+			but a lot of new method (and options for old methods) had been added. See the documentation bellow.</p>
+			
+			<h2 id="documentation">Documentation</h2>
+			
+			<h3>Important Note</h3>
+			<p>A lot of new methods can take an <code>$options</code> parameter in last position. Most of these method have parameters
+			before the options, but most of the method can take the <code>$options</code> as a previous parameter, in that case,
+			the type of the parameter will be specified as <code>options|...</code>. For example the <code>BootstrapHtmlHelper::label</code> method
+			can either take the <code>$options</code> parameter in second or third place, so the prototype is <code>label(string $text, options|string $type, array $options)</code>.</p>
+            <h3>BootstrapHtmlHelper</h3>
+			<p>The <code>BootstrapHtmlHelper</code> redefines only one function from the default CakePHP helper but add differents
+			methods. </p>
+			<div class="method">
+				<h4>icon (string $icon) <i>New!</i></h4>
+				<p>Returns a <b>glyphicon</b> icon.</p>
+				<div class="params">
+					<h5>Parameters: </h5>
+					<p class="param"><code>$icon</code> The icon to output (see example).</p>
+				</div>
+				<div class="examples">
+					<h5>Examples: </h5>
+<pre><code class="prettyprint lang-html">echo $this->Html->icon('plus') ;
+&lt;i class="glyphicon glyphicon-plus"&gt;&lt;/i&gt;
+echo $this->Html->icon('pencil') ;
+&lt;i class="glyphicon glyphicon-pencil"&gt;&lt;/i&gt;</code></pre>
+				</div>
+			</div>
+			<div class="method">
+				<h4>label (string $text, options|string $type = 'default', array $options = array()) <i>New!</i></h4>
+				<p>Returns a bootstrap label.</p>
+				<div class="params">
+					<h5>Parameters: </h5>
+					<p class="param"><code>$text</code> The label text.</p>
+					<p class="param"><code>$type</code> <span class="optional">[Optional]</span> The label type (can be any bootstrap label type, 
+						i.e. <code>'primary'</code>, <code>'success'</code>, etc.).</p>
+					<p class="param"><code>$options</code> <span class="optional">[Optional]</span> The options passed to the <code>HtmlHelper::span</code> method.</p>
+				</div>
+				<div class="examples">
+					<h5>Examples: </h5>
+<pre><code class="prettyprint lang-html">echo $this->Html->label('label') ;
+&lt;span class="label label-default"&gt;label&lt;/i&gt;
+echo $this->Html->label('label', 'primary') ;
+&lt;span class="label label-primary"&gt;label&lt;/i&gt;
+echo $this->Html->label('label', 'success', array('id' => 'mylabelid')) ;
+&lt;span id="mylabelid" class="label label-success"&gt;label&lt;/i&gt;
+echo $this->Html->label('label', array('class' => 'mylabelclass')) ;
+&lt;span class="mylabelclass label label-default"&gt;label&lt;/i&gt;</code></pre>
+				</div>
+			</div>
+			<div class="method">
+				<h4>badge (string $text, array $options = array()) <i>New!</i></h4>
+				<p>Returns a bootstrap badge.</p>
+				<div class="params">
+					<h5>Parameters: </h5>
+					<p class="param"><code>$text</code> The badge text.</p>
+					<p class="param"><code>$options</code> <span class="optional">[Optional]</span> The options passed to the <code>HtmlHelper::span</code> method.</p>
+				</div>
+				<div class="examples">
+					<h5>Examples: </h5>
+<pre><code class="prettyprint lang-html">echo $this->Html->badge('1') ;
+&lt;span class="badge"&gt;label&lt;/i&gt;
+echo $this->Html->badge('2', array('id' => 'mybadgeid')) ;
+&lt;span id="mybadgeid" class="badge"&gt;label&lt;/i&gt;</code></pre>
+				</div>
+			</div>
+			<div class="method">
+				<h4>getCrumbList (array $options = array(), string $startText = null) <i>Redefinition!</i></h4>
+				<p>This methods just add the correct options to $options before calling <code>HtmlHelper::getCrumbList</code>, to
+				render a bootstrap crumblist / breadcrumbs (see <a href="http://getbootstrap.com/components/#breadcrumbs">http://getbootstrap.com/components/#breadcrumbs</a>).</p>
+			</div>
+			<h3>BootstrapFormHelper</h3>
+			<h3>BootstrapModalHelper</h3>
+			<h3>BootstrapPaginatorHelper</h3>
+			<h3>BootstrapNavbarHelper</h3>
         </section>
     </div>
 
@@ -55,8 +146,12 @@
             <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
         </footer>
     </div>
-
-    
+	
+    <script type="text/javascript" src="javascripts/prettify/prettify.js"></script>
+	
+	<script type="text/javascript">
+		prettyPrint () ;
+	</script>
 
   </body>
 </html>
