@@ -1,0 +1,51 @@
+
+.inner {
+	max-width: 728px; 
+}
+
+#main_content {
+	background: white ;
+	padding: 10px ;
+}
+
+#main_content pre {
+	width: auto ;
+}
+
+.method {
+	padding-bottom: 18px;
+	margin-bottom: 18px;
+	border-bottom: 1px solid #ddd;
+}
+
+.method h5 {
+	color:#BD8A5D;
+}
+
+.method > h4 {
+	color: #417282 ;
+}
+
+.method > h4 > i::before {
+	content: ' - ' ;
+	color: #333 ;
+}
+
+.method > h4 > i {
+	color: rgb(187, 18, 18) ;
+	font-style: italic ;
+}
+
+.param > code:first-child {
+	color: orange ;
+	font-weight: bold ;
+	background: none ;
+	box-shadow: none ;
+	display: inline-block ;
+	width: 80px ;
+}
+
+.param .optional {
+	font-weight: bold;
+	color: rgb(187, 18, 18);
+}
