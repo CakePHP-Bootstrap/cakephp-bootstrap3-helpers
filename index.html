@@ -31,6 +31,19 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
+            <h3>How to use?</h3>
+            <p>To use the helpers, just put them into your <code>View/Helper</code> folder and add the following 
+            lines in your controller: <br />
+              <pre><code>public $helpers = array(
+                  'Html' => 'BootstrapHtml',
+                  'Form' => 'BootstrapForm',
+                  'Modal' => 'BootstrapModal',
+                  'Paginator' => 'BootstrapPaginator'
+              ) ;
+              </code></pre>
+            </p>
+            Because each helper inherit from a base helper (<i>BootstrapHtmlHelper</i> inherits from <i>HtmlHelper</i>),
+            you can (and I recommend) to simply use the bootstrap helpers as the default helpers in your view.
             <h3>Work in progress... </h3>
         </section>
     </div>
