@@ -7,6 +7,10 @@ It's a work in progress, if you want to add any kind of bootstrap components, ju
 
 If you want a component but you don't really know how to do, do not hesitate to contact me!
 
+**Warning:** Works only with CakePHP 2.x! 
+
+<i>Looking for CakePHP 3.0 helpers? Check it out! https://github.com/Holt59/cakephp3-bootstrap3-helpers (Work in progress)</i>
+
 How to use?
 ===========
 
