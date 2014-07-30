@@ -262,7 +262,7 @@ class BootstrapNavbarHelper extends AppHelper {
      * )
      * 
     **/
-    private function compileNavBlock ($nav) {
+    private function __compileNavBlock ($nav) {
         $inner = '' ;
         $class = '' ;
         switch ($nav['type']) {
@@ -329,7 +329,7 @@ class BootstrapNavbarHelper extends AppHelper {
         $active = false ;
         $link = array() ;
         foreach ($menu['menu'] as $m) {
-            $res = $this->compileNavBlock($m) ;
+            $res = $this->__compileNavBlock($m) ;
             if ($res['active']) {
                 $active = true ;
                 $res = $this->addClass($res, 'active') ;
@@ -383,7 +383,7 @@ class BootstrapNavbarHelper extends AppHelper {
                 $ul = $nav['pull'] ;
                 $htmls[] = '<ul class="nav navbar-nav pull-'.$nav['pull'].'">' ;
             }
-            $res = $this->compileNavBlock($nav) ;
+            $res = $this->__compileNavBlock($nav) ;
             $options = array('class' => $res['class']) ;
             if ($res['active']) {
                 $options = $this->addClass($options, 'active') ;
@@ -458,7 +458,7 @@ class BootstrapNavbarHelper extends AppHelper {
      * Extract options from $options, returning $default if $key is not found.
      * 
     **/
-    private function _extractOption ($key, $options, $default = null) {
+    protected function _extractOption ($key, $options, $default = null) {
         if (isset($options[$key])) {
             return $options[$key] ;
         }
@@ -470,7 +470,7 @@ class BootstrapNavbarHelper extends AppHelper {
      * Extract navbar values from $options.
      * 
     **/
-    private function _extractValue ($options) {
+    protected function _extractValue ($options) {
         $value = array () ;
         $value['pull'] = $this->_extractOption('pull', $options, 'auto') ;
         unset ($options['pull']) ;
@@ -487,7 +487,7 @@ class BootstrapNavbarHelper extends AppHelper {
      * Add navbar block to current nav (navs, dropdownMenu, hoverMenu).
      * 
     **/
-    private function _addToCurrent ($type, $value, $options = array()) {
+    protected function _addToCurrent ($type, $value, $options = array()) {
         $value = array_merge($this->_extractValue($options), $value) ;
         $value['type'] = $type ;
         if ($this->currentSubMenu !== null) {

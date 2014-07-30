@@ -24,7 +24,7 @@ App::import('Helper', 'Paginator') ;
 
 class BootstrapPaginatorHelper extends PaginatorHelper {
 
-    private function _extractOption ($key, $options, $default = null) {
+    protected function _extractOption ($key, $options, $default = null) {
         if (isset($options[$key])) {
             return $options[$key] ;
         }

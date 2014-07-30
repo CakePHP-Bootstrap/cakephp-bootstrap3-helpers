@@ -26,7 +26,7 @@ class BootstrapModalHelper extends AppHelper {
 
     public $current = NULL ;
     
-    private function _extractOption ($key, $options, $default = null) {
+    protected function _extractOption ($key, $options, $default = null) {
         if (isset($options[$key])) {
             return $options[$key] ;
         }
@@ -99,7 +99,7 @@ class BootstrapModalHelper extends AppHelper {
         return '' ;
     }
 
-    private function _createheader ($title, $options = array()) {
+    protected function _createheader ($title, $options = array()) {
         $close = $this->_extractOption('close', $options, true);
         unset($options['close']) ;
         if ($close) {
@@ -111,11 +111,11 @@ class BootstrapModalHelper extends AppHelper {
         return $this->_cleancurrent().$this->Html->div('modal-header', $button.$this->Html->tag('h4', $title, array('class' => 'modal-title', 'id' => $this->currentId ? $this->currentId.'Label' : false)), $options) ; 
     }
 
-    private function _createbody ($text, $options = array()) {
+    protected function _createbody ($text, $options = array()) {
         return $this->_cleancurrent().$this->Html->div('modal-body', $text, $options) ; 
     }
 
-    private function _createfooter ($buttons = NULL, $options = array()) {
+    protected function _createfooter ($buttons = NULL, $options = array()) {
         if ($buttons == NULL) {
             $close = $this->_extractOption('close', $options, true);
             unset($options['close']) ;
@@ -129,7 +129,7 @@ class BootstrapModalHelper extends AppHelper {
         return $this->_cleancurrent().$this->Html->div('modal-footer', $buttons, $options) ; 
     }
     
-    private function _startpart ($part, $options = array()) {
+    protected function _startpart ($part, $options = array()) {
         $res = '' ;
         if ($this->current != NULL) {
             $res = $this->_endpart () ;
@@ -138,7 +138,7 @@ class BootstrapModalHelper extends AppHelper {
         return $res.$this->Html->div('modal-'.$part, NULL, $options) ;
     }
 
-    private function _endpart () {
+    protected function _endpart () {
         return '</div>' ;
     }
 
@@ -179,7 +179,7 @@ class BootstrapModalHelper extends AppHelper {
         return $this->_startpart('body', is_array($info) ? $info : $options) ;
     }
 
-    private function _isAssociativeArray ($array) {
+    protected function _isAssociativeArray ($array) {
         return array_keys($array) !== range(0, count($array) - 1);
     }
     
