@@ -9,7 +9,7 @@ If you want a component but you don't really know how to do, do not hesitate to 
 
 **Warning:** Works only with CakePHP 2.x! 
 
-<i>Looking for CakePHP 3.0 helpers? Check it out! https://github.com/Holt59/cakephp3-bootstrap3-helpers (Work in progress)</i>
+<i>Looking for CakePHP 3.0 helpers? Check it out! https://github.com/Holt59/cakephp3-bootstrap3-helpers</i>
 
 How to use?
 ===========
@@ -18,6 +18,8 @@ Just add Helper files into your View/Helpers directory and load the helpers in y
 ```public $helpers = array('BoostrapHtml', 'BootstrapForm', 'BoostrapPaginator', 'BootstrapNavbar') ;```
 
 I tried to keep CakePHP helpers style. You can find the documentation directly in the Helpers files.
+
+More documentation on the CakePHP 3.0 helpers page: https://github.com/Holt59/cakephp3-bootstrap3-helpers
 
 Copyright and license
 =====================
