@@ -23,7 +23,7 @@
 App::import('Helper', 'Html') ;
 App::import('Routing', 'Router') ;
 
-class BootstrapNavbarHelper extends AppHelper {
+class BootstrapNavbarHelper extends Helper {
 
     public $helpers = array('Html') ;
     
