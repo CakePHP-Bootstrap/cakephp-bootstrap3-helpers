@@ -10,7 +10,11 @@ CakePHP Helpers to generate HTML with @Twitter Boostrap style (<strong>version 3
 Installation
 ============
 
-Simply Clone the repository in your `app/Plugin/Bootstrap3` folder.
+Simply Clone the repository in your `app/Plugin/Bootstrap3` folder and add the following to your `app/Config/bootstrap.php`:
+
+```php
+CakePlugin::load('Bootstrap3') ;
+```
 
 How to use?
 ===========
