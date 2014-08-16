@@ -1,7 +1,7 @@
-cakephp-bootstrap-helpers
-=========================
+CakePHP 2.x Helpers for Bootstrap 3
+===================================
 
-CakePHP Helpers to generate HTML with @Twitter Boostrap style (<strong>version 3.0</strong>).
+CakePHP Helpers to generate HTML with @Twitter Boostrap 3 style.
 
 **Warning:** Works only with CakePHP 2.x! 
 
