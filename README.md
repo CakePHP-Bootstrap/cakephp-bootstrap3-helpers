@@ -7,6 +7,10 @@ CakePHP Helpers to generate HTML with @Twitter Boostrap style (<strong>version 3
 
 <i>Looking for CakePHP 3.0 helpers? Check it out! https://github.com/Holt59/cakephp3-bootstrap3-helpers</i>
 
+Do not hesitate to...
+ - **Post a github issue** if you find a bug or want a new feature.
+ - **Send me a message** if you have troubles installing or using the plugin.
+
 Installation
 ============
 
