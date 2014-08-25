@@ -417,14 +417,15 @@ class BootstrapNavbarHelper extends Helper {
         $inner = implode('', $htmls) ;
         
         if ($this->responsive) {
-            $button = $this->Html->tag('a', 
+            $button = $this->Html->tag('button', 
                 implode('', array(
+                    $this->Html->tag('span', __('Toggle navigation'), array('class' => 'sr-only')),
                     $this->Html->tag('span', '', array('class' => 'icon-bar')),
                     $this->Html->tag('span', '', array('class' => 'icon-bar')),
                     $this->Html->tag('span', '', array('class' => 'icon-bar'))
                 )),
                 array(
-                    'class' => 'btn btn-navbar',
+                    'class' => 'navbar-toggle',
                     'data-toggle' => 'collapse',
                     'data-target' => '.navbar-collapse'
                 )
