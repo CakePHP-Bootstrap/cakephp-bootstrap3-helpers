@@ -375,7 +375,12 @@ class BootstrapFormHelper extends FormHelper {
             if (!array_key_exists('div', $options)) {
                 $options['div'] = array() ;
             }
-            $options['div']['class'] = 'form-actions' ;
+
+			if (!isset($options['div']['class'])){
+				$options['div']['class'] = '';
+			}
+
+            $options['div']['class'] .=  ' form-actions' ;
         }
         return parent::end($options,$secureAttributes) ;
     }
