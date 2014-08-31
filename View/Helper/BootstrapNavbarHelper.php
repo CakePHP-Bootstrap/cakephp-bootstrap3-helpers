@@ -32,6 +32,7 @@ class BootstrapNavbarHelper extends Helper {
     private $static = false ;
     private $responsive = false ;
     private $inverse = false ;
+	private $fluid = false;
     
     /** Specify if we are currently in a submenu or not. If in submenu,
     this must be an array like: array('name' => '', 'url' => '', 'menu' => array()). **/
@@ -53,6 +54,7 @@ class BootstrapNavbarHelper extends Helper {
      *  - static: false, true (useless if fixed != false)
      *  - responsive: false, true
      *  - inverse: false, true
+     *  - fluid: false, true
      * 
     **/
     public function create ($options = array()) {
@@ -64,6 +66,8 @@ class BootstrapNavbarHelper extends Helper {
         unset($options['static']) ;
         $this->inverse = $this->_extractOption('inverse', $options, false) ;
         unset($options['inverse']) ;
+		$this->fluid = $this->_extractOption('fluid', $options, false);
+		unset($options['fluid']);
         $this->options = $options ;
     }
     
@@ -444,7 +448,8 @@ class BootstrapNavbarHelper extends Helper {
         }
         
         /** Add container. **/
-        $inner = $this->Html->tag('div', $inner, array('class' => 'container')) ;
+		$container_class = $this->fluid? 'container-fluid' : 'container';
+        $inner = $this->Html->tag('div', $inner, array('class' => $container_class)) ;
         
         /** Add inner. **/
         $inner = $this->Html->tag('div', $inner, array('class' => 'navbar-inner')) ;

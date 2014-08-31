@@ -33,7 +33,7 @@ class BootstrapFormHelper extends FormHelper {
     private $colSize ;
 
     private $buttonTypes = array('primary', 'info', 'success', 'warning', 'danger', 'inverse', 'link') ;
-    private $buttonSizes = array('mini', 'small', 'large') ;
+    private $buttonSizes = array('sm', 'md', 'lg') ;
 
     /**
      *
@@ -46,18 +46,15 @@ class BootstrapFormHelper extends FormHelper {
     **/
     protected function _addButtonClasses ($options) {
         $options = $this->addClass($options, 'btn btn-default') ;
-        foreach ($this->buttonTypes as $type) {
-            if (isset($options['bootstrap-type']) && $options['bootstrap-type'] == $type) {
-                $options = $this->addClass($options, 'btn-'.$type) ;
-                break ;
-            }
-        }
-        foreach ($this->buttonSizes as $size) {
-            if (isset($options['bootstrap-size']) && $options['bootstrap-size'] == $size) {
-                $options = $this->addClass($options, 'btn-'.$size) ;
-                break ;
-            }
-        }
+
+		if (isset($options['bootstrap-type']) && in_array($options['bootstrap-type'], $this->buttonTypes)){
+			$options = $this->addClass($options, 'btn-'.$options['bootstrap-type']) ;
+		}
+
+		if (isset($options['bootstrap-size']) && in_array($options['bootstrap-size'], $this->buttonSizes)){
+			$options = $this->addClass($options, 'btn-'.$options['bootstrap-size']) ;
+		}
+
         unset($options['bootstrap-size']) ;
         unset($options['bootstrap-type']) ;
         return $options ;
@@ -378,7 +375,12 @@ class BootstrapFormHelper extends FormHelper {
             if (!array_key_exists('div', $options)) {
                 $options['div'] = array() ;
             }
-            $options['div']['class'] = 'form-actions' ;
+
+			if (!isset($options['div']['class'])){
+				$options['div']['class'] = '';
+			}
+
+            $options['div']['class'] .=  ' form-actions' ;
         }
         return parent::end($options,$secureAttributes) ;
     }
