@@ -452,9 +452,6 @@ class BootstrapNavbarHelper extends Helper {
 		$container_class = $this->fluid? 'container-fluid' : 'container';
         $inner = $this->Html->tag('div', $inner, array('class' => $container_class)) ;
         
-        /** Add inner. **/
-        $inner = $this->Html->tag('div', $inner, array('class' => 'navbar-inner')) ;
-                
         /** Add and return outer div. **/
         return $this->Html->tag('div', $inner, $this->options) ;
         
