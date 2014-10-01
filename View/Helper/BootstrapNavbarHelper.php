@@ -439,10 +439,14 @@ class BootstrapNavbarHelper extends Helper {
                 $inner = $brand.$inner ;
             }
             $inner = $this->Html->tag('div', $inner, array('class' => 'navbar-collapse collapse')) ;
+            
+            $header = '' ;
+            
             if ($this->brand !== null && !$this->brand['collapse']) {
-                $inner = $brand.$inner ;
+                $header = $brand ;
             }
-            $inner = $button.$inner ;
+            $header = $this->Html->tag('div', $button.$header, array('class' => 'navbar-header')) ;
+            $inner = $header.$inner ;
         }
         else if ($this->brand !== null) {
             $inner = $brand.$inner ;
