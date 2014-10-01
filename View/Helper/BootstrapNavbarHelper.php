@@ -319,7 +319,7 @@ class BootstrapNavbarHelper extends Helper {
     **/
     private function compileMenu ($menu) {
         if ($menu['type'] === 'menu') {
-            $button = $this->Html->link($menu['text'].'<b class="caret"></b>', $menu['url'] ? $menu['url'] : '#', array(
+            $button = $this->Html->link($menu['text'].'<span class="caret"></span>', $menu['url'] ? $menu['url'] : '#', array(
                 'class' => 'dropdown-toggle',
                 'data-toggle' => 'dropdown',
                 'escape' => false
@@ -403,7 +403,7 @@ class BootstrapNavbarHelper extends Helper {
         }
         
         /** Generate options for outer div. **/
-        $this->options = $this->addClass($this->options, 'navbar') ;
+        $this->options = $this->addClass($this->options, 'navbar navbar-default') ;
         if ($this->fixed !== false) {
             $this->options = $this->addClass($this->options, 'navbar-fixed-'.$this->fixed) ;
         }
@@ -429,7 +429,8 @@ class BootstrapNavbarHelper extends Helper {
                     $this->Html->tag('span', '', array('class' => 'icon-bar'))
                 )),
                 array(
-                    'class' => 'navbar-toggle',
+                    'type' => 'button',
+                    'class' => 'navbar-toggle collapsed',
                     'data-toggle' => 'collapse',
                     'data-target' => '.navbar-collapse'
                 )
