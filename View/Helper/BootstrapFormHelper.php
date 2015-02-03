@@ -205,7 +205,7 @@ class BootstrapFormHelper extends FormHelper {
         $options = $this->_parseOptions($options) ;
         $options['format'] = array('label', 'before', 'input', 'between', 'error', 'after') ;
 
-        $beforeClass = '' ;
+        $beforeClass = array() ;
 
         if ($options['type'] == 'checkbox' || $options['type'] == 'radio') {
             $before = '<label>'.$before ;
@@ -216,10 +216,10 @@ class BootstrapFormHelper extends FormHelper {
             );
         }
         else if ($this->horizontal) {
-            $beforeClass .= $this->_getColClass('input') ;
+            $beforeClass[] = $this->_getColClass('input') ;
         }
         if ($prepend) {
-            $beforeClass .= ' input-group' ;
+            $beforeClass[] = 'input-group' ;
             if (is_string($prepend)) {
                 $before .= '<span class="input-group-'.($this->_matchButton($prepend) ? 'btn' : 'addon').'">'.$prepend.'</span>' ;
             }
@@ -230,7 +230,7 @@ class BootstrapFormHelper extends FormHelper {
             }
         }
         if ($append) {
-            $beforeClass .= ' input-group' ;
+            $beforeClass[] = 'input-group' ;
             if (is_string($append)) {
                 $between = '<span class="input-group-'.($this->_matchButton($append) ? 'btn' : 'addon').'">'.$append.'</span>'.$between ;
             }
@@ -241,9 +241,11 @@ class BootstrapFormHelper extends FormHelper {
             }
         }
 
-        if ($beforeClass) {
-            $before = '<div class="'.$beforeClass.'">'.$before ;
-            $after = $after.'</div>' ;
+        if (!empty($beforeClass)) {
+            foreach($beforeClass as $bc) {
+                $before .= '<div class="'.$bc.'">' ;
+                $after = '</div>'.$after ;
+            }
         }
 
         $options['before'] = $before ;
