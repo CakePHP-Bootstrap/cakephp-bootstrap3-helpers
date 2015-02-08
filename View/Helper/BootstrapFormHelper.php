@@ -230,6 +230,9 @@ class BootstrapFormHelper extends FormHelper {
         else if ($this->horizontal) {
             $beforeClass[] = $this->_getColClass('input') ;
         }
+        if ($options['type'] == 'radio') {
+            $options['separator'] = '</label></div><div class="radio"><label>' ;
+        }
         if ($prepend) {
             $beforeClass[] = 'input-group' ;
             if (is_string($prepend)) {
