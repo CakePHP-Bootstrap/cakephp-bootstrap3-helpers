@@ -35,6 +35,8 @@ class BootstrapFormHelper extends FormHelper {
     private $buttonTypes = array('primary', 'info', 'success', 'warning', 'danger', 'inverse', 'link') ;
     private $buttonSizes = array('sm', 'md', 'lg') ;
 
+    private $currentInputType = null ;
+
     /**
      *
      * Add classes to options according to values of bootstrap-type and bootstrap-size for button.
@@ -129,10 +131,14 @@ class BootstrapFormHelper extends FormHelper {
      * Return the col size class for the specified column (label, input or error).
      *
     **/
-    protected function _getColClass($what) {
+    protected function _getColClass($what, $offset = false) {
+        if ($what == 'offset') {
+            $what = 'label' ;
+            $offset = TRUE ;
+        }
         $size = $this->colSize[$what] ;
         if ($size) {
-            return 'col-lg-'.$size ;
+            return 'col-md-'.($offset ? 'offset-' : '').$size ;
         }
         return '' ;
     }
@@ -163,18 +169,17 @@ class BootstrapFormHelper extends FormHelper {
      *
     **/
     public function label($fieldName = null, $text = null, $options = array()) {
-        $this->setEntity($fieldName);
-        $optField = $this->_magicOptions(array()) ;
-        if ($optField['type'] != 'checkbox' && $optField['type'] != 'radio') {
-            if (!$this->inline) {
-                $options = $this->addClass($options, 'control-label') ;
-            }
-            if ($this->horizontal) {
-                $options = $this->addClass($options, $this->_getColClass('label')) ;
-            }
-            if ($this->inline) {
-                $options = $this->addClass($options, 'sr-only') ;
-            }
+        if ($this->currentInputType == 'checkbox' || $this->currentInputType == 'radio') {
+            return $text ;
+        }
+        if (!$this->inline) {
+            $options = $this->addClass($options, 'control-label') ;
+        }
+        if ($this->horizontal) {
+            $options = $this->addClass($options, $this->_getColClass('label')) ;
+        }
+        if ($this->inline) {
+            $options = $this->addClass($options, 'sr-only') ;
         }
         return parent::label($fieldName, $text, $options) ;
     }
@@ -204,6 +209,7 @@ class BootstrapFormHelper extends FormHelper {
         $this->setEntity($fieldName);
         $options = $this->_parseOptions($options) ;
         $options['format'] = array('label', 'before', 'input', 'between', 'error', 'after') ;
+        $this->currentInputType = $options['type'] ;
 
         $beforeClass = array() ;
 
@@ -211,9 +217,15 @@ class BootstrapFormHelper extends FormHelper {
             $before = '<label>'.$before ;
             $between = $between.'</label>' ;
             $options['format'] = array('before', 'input', 'label', 'between', 'error', 'after') ;
-            $options['div'] = array(
-                'class' => $options['type']
-            );
+            if ($this->horizontal) {
+                $before = '<div class="'.$this->_getColClass('input').' '.$this->_getColClass('offset').'"><div class="'.$options['type'].'">'.$before ;
+                $after = $after.'</div></div>' ;
+            }
+            else {
+                $options['div'] = array(
+                    'class' => $options['type']
+                );
+            }
         }
         else if ($this->horizontal) {
             $beforeClass[] = $this->_getColClass('input') ;
@@ -350,11 +362,14 @@ class BootstrapFormHelper extends FormHelper {
      *
     **/
     public function submit($caption = null, $options = array()) {
+        $options = $this->_addButtonClasses($options) ;
         if (!isset($options['div'])) {
             $options['div'] = false ;
         }
-        $options = $this->_addButtonClasses($options) ;
-        return parent::submit($caption, $options) ;
+        if (!$this->horizontal) {
+            return parent::submit($caption, $options) ;
+        }
+        return '<div class="form-group"><div class="'.$this->_getColClass('offset').' '.$this->_getColClass('input').'">'.parent::submit($caption, $options).'</div></div>';
     }
 
     /**
@@ -368,7 +383,7 @@ class BootstrapFormHelper extends FormHelper {
     **/
     public function end ($options = null,$secureAttributes = array()) {
         if ($options == null) {
-            return parent::end($options,$secureAttributes) ;
+            return parent::end($options, $secureAttributes) ;
         }
         if (is_string($options)) {
             $options = array('label' => $options) ;
@@ -384,7 +399,7 @@ class BootstrapFormHelper extends FormHelper {
 
             $options['div']['class'] .=  ' form-actions' ;
         }
-        return parent::end($options,$secureAttributes) ;
+        return parent::end($options, $secureAttributes) ;
     }
 
     /** SPECIAL FORM **/
