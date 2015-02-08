@@ -205,6 +205,8 @@ class BootstrapFormHelper extends FormHelper {
         $after = $this->_extractOption('after', $options, '') ;
         $between = $this->_extractOption('between', $options, '') ;
         $label = $this->_extractOption('label', $options, false) ;
+        $inline = $this->_extractOption('inline', $options, false) ;
+        unset ($options['inline']) ;
 
         $this->setEntity($fieldName);
         $options = $this->_parseOptions($options) ;
@@ -218,7 +220,7 @@ class BootstrapFormHelper extends FormHelper {
             $between = $between.'</label>' ;
             $options['format'] = array('before', 'input', 'label', 'between', 'error', 'after') ;
             if ($this->horizontal) {
-                $before = '<div class="'.$this->_getColClass('input').' '.$this->_getColClass('offset').'"><div class="'.$options['type'].'">'.$before ;
+                $before = '<div class="'.$this->_getColClass('input').' '.$this->_getColClass('offset').'"><div class="'.$options['type'].($inline ? '-inline' : '').'">'.$before ;
                 $after = $after.'</div></div>' ;
             }
             else {
@@ -226,12 +228,12 @@ class BootstrapFormHelper extends FormHelper {
                     'class' => $options['type']
                 );
             }
+            if ($options['type'] == 'radio') {
+                $options['separator'] = '</label></div><div class="radio'.($inline ? '-inline' : '').'"><label>' ;
+            }
         }
         else if ($this->horizontal) {
             $beforeClass[] = $this->_getColClass('input') ;
-        }
-        if ($options['type'] == 'radio') {
-            $options['separator'] = '</label></div><div class="radio"><label>' ;
         }
         if ($prepend) {
             $beforeClass[] = 'input-group' ;
