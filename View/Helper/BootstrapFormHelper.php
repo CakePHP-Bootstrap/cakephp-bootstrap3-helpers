@@ -216,20 +216,21 @@ class BootstrapFormHelper extends FormHelper {
         $beforeClass = array() ;
 
         if ($options['type'] == 'checkbox' || $options['type'] == 'radio') {
-            $before = '<label>'.$before ;
+            $before = '<label'.($inline ? ' class="'.$options['type'].'-inline"' : '').'>'.$before ;
             $between = $between.'</label>' ;
             $options['format'] = array('before', 'input', 'label', 'between', 'error', 'after') ;
             if ($this->horizontal) {
-                $before = '<div class="'.$this->_getColClass('input').' '.$this->_getColClass('offset').'"><div class="'.$options['type'].($inline ? '-inline' : '').'">'.$before ;
-                $after = $after.'</div></div>' ;
+                $before = '<div class="'.$this->_getColClass('input').' '.$this->_getColClass('offset').'">'.($inline ? '' : '<div class="'.$options['type'].'">').$before ;
+                $after = $after.($inline ? '' : '</div>').'</div>' ;
             }
-            else {
+            else if (!$inline) {
                 $options['div'] = array(
                     'class' => $options['type']
                 );
             }
             if ($options['type'] == 'radio') {
-                $options['separator'] = '</label></div><div class="radio'.($inline ? '-inline' : '').'"><label>' ;
+                $options['label'] = FALSE ;
+                $options['separator'] = '</label>'.($inline ? '<label'.($inline ? ' class="'.$options['type'].'-inline"' : '').'>' : '</div><div class="radio"><label>') ;
             }
         }
         else if ($this->horizontal) {
