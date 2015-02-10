@@ -169,7 +169,7 @@ class BootstrapFormHelper extends FormHelper {
      *
     **/
     public function label($fieldName = null, $text = null, $options = array()) {
-        if ($this->currentInputType == 'checkbox' || $this->currentInputType == 'radio') {
+        if ($this->currentInputType == 'checkbox') { //  || $this->currentInputType == 'radio') {
             return $text ;
         }
         if (!$this->inline) {
@@ -220,15 +220,21 @@ class BootstrapFormHelper extends FormHelper {
             $between = $between.'</label>' ;
             $options['format'] = array('before', 'input', 'label', 'between', 'error', 'after') ;
             if ($this->horizontal) {
-                $before = '<div class="'.$this->_getColClass('input').' '.$this->_getColClass('offset').'">'.($inline ? '' : '<div class="'.$options['type'].'">').$before ;
+                $before = '<div class="'.$this->_getColClass('input')
+                    .($options['type'] == 'checkbox' || !$label ? ' '.$this->_getColClass('offset') : '').'">'
+                    .($inline ? '' : '<div class="'.$options['type'].'">').$before ;
                 $after = $after.($inline ? '' : '</div>').'</div>' ;
             }
-            else if (!$inline) {
+            else if (!$inline && ($options['type'] == 'checkbox' || !$label)) {
                 $options['div'] = array(
                     'class' => $options['type']
                 );
             }
             if ($options['type'] == 'radio') {
+                if ($label) {
+                    $before = $this->label($fieldName, $label).($this->horizontal ? '' : '<div class="radio">').$before ;
+                    $after .= $this->horizontal ? '' : '</div>' ;
+                }
                 $options['label'] = FALSE ;
                 $options['separator'] = '</label>'.($inline ? '<label'.($inline ? ' class="'.$options['type'].'-inline"' : '').'>' : '</div><div class="radio"><label>') ;
             }
