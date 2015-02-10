@@ -49,13 +49,13 @@ class BootstrapFormHelper extends FormHelper {
     protected function _addButtonClasses ($options) {
         $options = $this->addClass($options, 'btn btn-default') ;
 
-		if (isset($options['bootstrap-type']) && in_array($options['bootstrap-type'], $this->buttonTypes)){
-			$options = $this->addClass($options, 'btn-'.$options['bootstrap-type']) ;
-		}
+        if (isset($options['bootstrap-type']) && in_array($options['bootstrap-type'], $this->buttonTypes)){
+            $options = $this->addClass($options, 'btn-'.$options['bootstrap-type']) ;
+        }
 
-		if (isset($options['bootstrap-size']) && in_array($options['bootstrap-size'], $this->buttonSizes)){
-			$options = $this->addClass($options, 'btn-'.$options['bootstrap-size']) ;
-		}
+        if (isset($options['bootstrap-size']) && in_array($options['bootstrap-size'], $this->buttonSizes)){
+            $options = $this->addClass($options, 'btn-'.$options['bootstrap-size']) ;
+        }
 
         unset($options['bootstrap-size']) ;
         unset($options['bootstrap-type']) ;
@@ -220,7 +220,10 @@ class BootstrapFormHelper extends FormHelper {
             $between = $between.'</label>' ;
             $options['format'] = array('before', 'input', 'label', 'between', 'error', 'after') ;
             if ($this->horizontal) {
-                $before = '<div class="'.$this->_getColClass('input').' '.$this->_getColClass('offset').'">'.($inline ? '' : '<div class="'.$options['type'].'">').$before ;
+                $before = '<div class="'.$this->_getColClass('input').' '.(!empty($label) ? '' : $this->_getColClass('offset')).'">'.($inline ? '' : '<div class="'.$options['type'].'">').$before ;
+                if(!empty($label)){
+                    $before = '<label for="'.$fieldName.key($options['options']).'" class="control-label '.$this->_getColClass('label').'">'.$label.'</label>'.$before;
+                }
                 $after = $after.($inline ? '' : '</div>').'</div>' ;
             }
             else if (!$inline) {
@@ -228,6 +231,12 @@ class BootstrapFormHelper extends FormHelper {
                     'class' => $options['type']
                 );
             }
+            else{
+                if(!empty($label)){
+                    $before = '<label for="'.$fieldName.key($options['options']).'" class="control-label">'.$label.'</label><div class="clearfix"></div>'.$before;                
+                }
+            }
+
             if ($options['type'] == 'radio') {
                 $options['label'] = FALSE ;
                 $options['separator'] = '</label>'.($inline ? '<label'.($inline ? ' class="'.$options['type'].'-inline"' : '').'>' : '</div><div class="radio"><label>') ;
@@ -399,9 +408,9 @@ class BootstrapFormHelper extends FormHelper {
                 $options['div'] = array() ;
             }
 
-			if (!isset($options['div']['class'])){
-				$options['div']['class'] = '';
-			}
+            if (!isset($options['div']['class'])){
+                $options['div']['class'] = '';
+            }
 
             $options['div']['class'] .=  ' form-actions' ;
         }
