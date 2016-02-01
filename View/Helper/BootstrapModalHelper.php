@@ -43,12 +43,14 @@ class BootstrapModalHelper extends Helper {
      * Extra options (useless if $title not specified) :
      *     - close: Add close buttons to header (default true)
      *     - no-body: Do not open the body after the create (default false)
+     *     - size: Modals have two optional sizes, large for modal-lg or small for modal-sm.
     **/
     public function create($title = null, $options = array()) {
 
         if (is_array($title)) {
             $options = $title ;
         }
+
         $close = $this->_extractOption('close', $options, true);
         unset ($options['close']) ;
         $nobody = $this->_extractOption('no-body', $options, false);
@@ -60,7 +62,15 @@ class BootstrapModalHelper extends Helper {
             $this->currentId = $options['id'] ;
             $options['aria-labbeledby'] = $this->currentId.'Label' ;
         }
-		$res = $this->Html->div('modal fade', NULL, $options).$this->Html->div('modal-dialog').$this->Html->div('modal-content');
+        if (isset($options['size'])) {
+            if($options['size'] == 'large'){$size = ' modal-lg';} 
+            if($options['size'] == 'small'){$size = ' modal-sm';} 
+        } else {
+            $size = null; //default size modal
+        }
+        unset($options['size']);
+
+        $res = $this->Html->div('modal fade', NULL, $options).$this->Html->div('modal-dialog' . $size).$this->Html->div('modal-content');
         if (is_string($title) && $title) {
             $res .= $this->_createheader($title, array('close' => $close)) ;
             if (!$nobody) {
@@ -182,7 +192,7 @@ class BootstrapModalHelper extends Helper {
     protected function _isAssociativeArray ($array) {
         return array_keys($array) !== range(0, count($array) - 1);
     }
-    
+
     /**
      *
      * Create / Start the footer. If $buttons is specified as an associative arrays or as null, start the footer, otherwize create the footer with the specified buttons.
