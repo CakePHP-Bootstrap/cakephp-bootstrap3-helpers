@@ -296,7 +296,7 @@ class BootstrapFormHelper extends FormHelper {
         $options['after'] = $after ;
         $options['between'] = $between ;
 
-        if ($options['type'] != 'checkbox' && $options['type'] != 'radio') {
+        if (!in_array($options['type'], array('checkbox', 'radio', 'file'))) {
             $options = $this->addClass($options, 'form-control') ;
         }
 
