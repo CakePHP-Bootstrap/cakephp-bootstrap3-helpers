@@ -170,7 +170,20 @@ class BootstrapFormHelper extends FormHelper {
      *
     **/
     public function label($fieldName = null, $text = null, $options = array()) {
-        if ($this->currentInputType == 'checkbox') { //  || $this->currentInputType == 'radio') {
+        if ($this->currentInputType == 'checkbox') {
+            if ($text === null) {
+                if (strpos($fieldName, '.') !== false) {
+                    $fieldElements = explode('.', $fieldName);
+                    $text = array_pop($fieldElements);
+                } 
+                else {
+                    $text = $fieldName;
+                }
+                if (substr($text, -3) === '_id') {
+                    $text = substr($text, 0, -3);
+                }
+                $text = __(Inflector::humanize(Inflector::underscore($text)));
+            }
             return $text ;
         }
         if (!$this->inline) {
