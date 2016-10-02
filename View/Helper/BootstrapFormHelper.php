@@ -271,7 +271,7 @@ class BootstrapFormHelper extends FormHelper {
             }
         }
         if ($append) {
-            $beforeClass[] = 'input-group' ;
+            if (!$prepend) $beforeClass[] = 'input-group' ;
             if (is_string($append)) {
                 $between = '<span class="input-group-'.($this->_matchButton($append) ? 'btn' : 'addon').'">'.$append.'</span>'.$between ;
             }
