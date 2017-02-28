@@ -119,7 +119,10 @@ class BootstrapFormHelper extends FormHelper {
             $options = $this->addClass($options, 'form-search') ;
         }
         $options['role'] = 'form' ;
-        $options['inputDefaults'] = array(
+        if (!isset($options['inputDefaults']) || !is_array($options['inputDefaults'])) {
+            $options['inputDefaults'] = array();
+        }
+        $options['inputDefaults'] += array(
             'div' => array(
                 'class' => 'form-group'
             )
