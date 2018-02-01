@@ -2,7 +2,7 @@
 	"name": "holt59/cakephp-bootstrap3-helpers",
 	"description": "Bootstrap 3 Helpers for CakePHP 2.x",
 	"keywords": ["CakePHP", "Bootstrap", "Helper"],
-	"license": "Apache",
+	"license": "MIT",
 	"type": "cakephp-plugin",
 	"require": {
 		"composer/installers": "*"
