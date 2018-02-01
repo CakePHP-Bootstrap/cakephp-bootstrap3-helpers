@@ -22,7 +22,7 @@
 
 App::import('Helper', 'Html') ;
 
-class BootstrapHtmlHelper extends HtmlHelper {    
+class BootstrapHtmlHelper extends HtmlHelper {
 
     protected function _extractOption ($key, $options, $default = null) {
         if (isset($options[$key])) {
@@ -30,15 +30,15 @@ class BootstrapHtmlHelper extends HtmlHelper {
         }
         return $default ;
     }
-    
+
     /**
-     * 
+     *
      * Check type values in $options, returning null if no option is found or if
-     * option is not in $avail. 
+     * option is not in $avail.
      * If type == $default, $default is returned (even if it is not in $avail).
-     * 
+     *
     **/
-    protected function _extractType ($options, $key = 'type', $default = 'info', 
+    protected function _extractType ($options, $key = 'type', $default = 'info',
                                      $avail = array('info', 'success', 'warning', 'error')) {
         $type = $this->_extractOption($key, $options, $default) ;
         if ($default !== false && $type == $default) {
@@ -51,24 +51,51 @@ class BootstrapHtmlHelper extends HtmlHelper {
     }
 
     /**
-     * 
+     *
      * Create a Twitter Bootstrap icon.
-     * 
+     *
      * @param $icon The type of the icon (search, pencil, etc.)
-     * 
+     * @param $opcions Options for icon
+     * @param $opcions['tag'] Tag use for the icon, "i" for default
+     * @param $opcions['font'] Font of the icon:
+     *                         "glyphicon" for default Twitter Bootstrap icon.
+     *                         "fa" for Font Awesome icon.
+     *
     **/
-    public function icon ($icon) {
-        return '<i class="glyphicon glyphicon-'.$icon.'"></i>' ; 
+    public function icon ($icon, array $options = []) {
+        $tag = empty($options['tag']) ? 'i' : $options['tag'];
+        $font = 'glyphicon glyphicon-';
+        if (!empty($options['font']) and $options['font'] == 'fa') {
+            $font = 'fa fa-';
+        }
+        unset($options['tag']);
+        unset($options['font']);
+        $options['class'] = empty($options['class']) ? ($font . $icon) : ($font . $icon . ' ' . $options['class']);
+        return $this->tag($tag, '', $options);
     }
-    
+
+    /**
+     *
+     * Create a Font Awesome icon.
+     *
+     * @param $icon The type of the icon (search, pencil, etc.)
+     * @param $opcions Options for icon
+     * @param $opcions['tag'] Tag use for the icon, "i" for default
+     *
+    **/
+    public function faIcon($icon, array $options = []) {
+        $options['font'] = 'fa';
+        return $this->icon($icon, $options);
+    }
+
     /**
      *
      * Create a Twitter Bootstrap span label.
-     * 
+     *
      * @param text The label text
      * @param type The label type (default, primary, success, warning, info, danger)
      * @param options Options for span
-     * 
+     *
      * The second parameter may either be $type or $options (in this case, the third parameter
      * is useless, and the label type can be specified in the $options array).
      *
@@ -90,11 +117,11 @@ class BootstrapHtmlHelper extends HtmlHelper {
         $options = $this->addClass($options, 'label-'.$type) ;
         return $this->tag('span', $text, $options) ;
     }
-    
+
     /**
      *
      * Create a Twitter Bootstrap span badge.
-     * 
+     *
      * @param text The badge text
      * @param options Options for span
      *
@@ -106,12 +133,12 @@ class BootstrapHtmlHelper extends HtmlHelper {
     }
 
     /**
-     * 
+     *
      * Get crumb lists in a HTML list, with bootstrap like style.
      *
      * @param $options Options for list
      * @param $startText Text to insert before list
-     * 
+     *
      * Unusable options:
      * 	- Separator
     **/
@@ -120,22 +147,22 @@ class BootstrapHtmlHelper extends HtmlHelper {
         $options = $this->addClass($options, 'breadcrumb') ;
         return parent::getCrumbList ($options, $startText) ;
     }
-    
+
     /**
-     *  
+     *
      * Create a Twitter Bootstrap style alert block, containing text.
-     *  
+     *
      * @param $text The alert text
      * @param $type The type of the alert
      * @param $options Options that will be passed to Html::div method
      *
      * The second parameter may either be $type or $options (in this case, the third parameter
      * is useless, and the label type can be specified in the $options array).
-     * 
+     *
      * Available BootstrapHtml options:
-     * 	- type: string, type of alert (default, error, info, success ; useless if 
+     * 	- type: string, type of alert (default, error, info, success ; useless if
      *    $type is specified)
-     *     
+     *
     **/
     public function alert ($text, $type = 'warning', $options = array()) {
         if (is_string($type)) {
@@ -155,28 +182,28 @@ class BootstrapHtmlHelper extends HtmlHelper {
         unset($options['class']) ;
         return $this->div($class, $button.$text, $options) ;
     }
-    
+
     /**
-     * 
+     *
      * Create a Twitter Bootstrap style progress bar.
-     * 
-     * @param $widths 
+     *
+     * @param $widths
      * 	- The width (in %) of the bar (style primary, without display)
-     * 	- An array of bar, with (for each bar) : 
+     * 	- An array of bar, with (for each bar) :
      *        - width (only field required)
      *        - type (primary, info, danger, success, warning, default is primary)
      *        - min (integer, default 0)
      *        - max (integer, default 100)
      *        - display (boolean, default false, for text display)
      * @param $options Options that will be passed to Html::div method (only for main div)
-     *  
+     *
      * If $widths is only a integer (first case), $options may contains value for the fields
      * specified above.
      *
      * Available BootstrapHtml options:
      * 	- striped: boolean, specify if progress bar should be striped
      * 	- active: boolean, specify if progress bar should be active
-     *     
+     *
     **/
     public function progress ($widths, $options = array()) {
         $striped = $this->_extractOption('striped', $options, false) ;
@@ -195,7 +222,7 @@ class BootstrapHtmlHelper extends HtmlHelper {
                     'aria-valuenow' => $w['width'],
                     'aria-valuemin' => $min,
                     'aria-valuemax' => $max,
-                    'role' => 'progressbar', 
+                    'role' => 'progressbar',
                     'style' => 'width: '.$w['width'].'%;'
                 )) ;
             }
@@ -214,7 +241,7 @@ class BootstrapHtmlHelper extends HtmlHelper {
                 'aria-valuenow' => $widths,
                 'aria-valuemin' => $min,
                 'aria-valuemax' => $max,
-                'role' => 'progressbar', 
+                'role' => 'progressbar',
                 'style' => 'width: '.$widths.'%;'
             )) ;
         }
@@ -229,7 +256,7 @@ class BootstrapHtmlHelper extends HtmlHelper {
         unset($options['class']) ;
         return $this->div($classes, $bars, $options) ;
     }
-    
+
 }
 
 ?>
